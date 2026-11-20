@@ -1,0 +1,20 @@
+syntax = "proto3";
+package course;
+
+service Predictor {
+  rpc Predict (CaptionRequest) returns (PredictionResponse);
+}
+
+// Клиент передаёт байты файла. Отсутствующий лимит оставляет выбор значения модели.
+message CaptionRequest {
+  optional bytes image = 1;
+  optional int32 max_new_tokens = 2;
+}
+
+// Хеш относится к изображению, ID — к конкретному вызову.
+message PredictionResponse {
+  string caption = 1;
+  string model_version = 2;
+  string request_id = 3;
+  string image_sha256 = 4;
+}
